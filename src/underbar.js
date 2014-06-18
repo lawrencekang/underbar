@@ -106,9 +106,9 @@ var _ = {};
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
        var mapHolder = [];
-        for (var i=0, len = collection.length; i < len; i++) {
-        mapHolder.push(iterator(collection[i], i, collection))
-        };
+        _.each(collection, function(item) {
+        mapHolder.push(iterator(item))
+        });
         return mapHolder
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
