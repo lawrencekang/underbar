@@ -79,14 +79,14 @@ var _ = {};
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
-    var holder = [];
+    var result = [];
     _.each(collection, function(item) {
       if(test(item)){
-        holder.push(item);
+        result.push(item);
 
     };
   });
-    return holder
+    return result
     
     };
  
@@ -94,12 +94,27 @@ var _ = {};
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
-  
-
+    return _.filter(collection, function(item){
+      return !test(item)
+    })
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var result = [];
+   // _.each(array, function(item){
+   // result.push(_.indexOf(array, item))
+ // });
+   _.each(array, function(item, index){
+         result.push(_.indexOf(array, item) === index)
+    
+  })
+  return result
+
+      
+
+    
+
   };
 
 
