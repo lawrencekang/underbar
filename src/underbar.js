@@ -101,19 +101,13 @@ var _ = {};
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
-    var result = [];
-   // _.each(array, function(item){
-   // result.push(_.indexOf(array, item))
- // });
-   _.each(array, function(item, index){
-         result.push(_.indexOf(array, item) === index)
-    
-  })
-  return result
 
-      
+return _.filter(array, function(item, index){
+   return(_.indexOf(array, item)===index)
+})
+     
 
-    
+
 
   };
 
@@ -151,6 +145,7 @@ var _ = {};
   // Calls the method named by methodName on each value in the list.
   // Note: you will nead to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+
   };
 
   // Reduces an array or object to a single value by repetitively calling
