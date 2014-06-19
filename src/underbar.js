@@ -101,24 +101,25 @@ var _ = {};
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var sorted = array.sort();
+    var result = [];
+    for (var i=0, len=array.length; i<len; i++){
+      if (array[i] != array[i+1]) {
+        result.push(array[i]);
+      }
+    }
 
-return _.filter(array, function(item, index){
-   return(_.indexOf(array, item)===index)
-})
-     
-
-
-
+    return result
   };
 
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
-       var mapHolder = [];
+       var results = [];
         _.each(collection, function(item) {
-        mapHolder.push(iterator(item))
+        results.push(iterator(item))
         });
-        return mapHolder
+        return results
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
@@ -145,6 +146,9 @@ return _.filter(array, function(item, index){
   // Calls the method named by methodName on each value in the list.
   // Note: you will nead to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+    var self = this;
+   return functionOrKey.apply(self, collection)
+     
 
   };
 
