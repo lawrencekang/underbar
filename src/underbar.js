@@ -201,11 +201,12 @@ var _ = {};
     if (accumulator == undefined) {
       accumulator = collection[0]
     };
-    var total = accumulator;
-    for(var i = 0; i<collection.length; i++){
-      total = iterator(total, collection[i])
-    }
-      return total
+    // call _.each on collection using anonymous function - each has no return value, so don't "return _.each()"
+    // anon function takes on item as parameter, makes accumulator = result of iterator run on accumulator and item
+    _.each(collection, function(item){
+    return accumulator = iterator(accumulator, item)
+    });
+    return accumulator
   };
 
   // Determine if the array or object contains a given value (using `===`).
