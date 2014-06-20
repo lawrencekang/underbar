@@ -8,6 +8,7 @@ var _ = {};
   // seem very useful, but remember it--if a function needs to provide an
   // iterator when the user does not pass one in, this will be handy.
   _.identity = function(val) {
+    return val // returns the argument from the _.identity call
   };
 
   /**
@@ -33,13 +34,14 @@ var _ = {};
   // return just the first element.
   _.first = function(array, n) {
     return n === undefined ? array[0] : array.slice(0, n);
+    // if "n" is undefined, return the first item, else take the items from index 0 to n
   };
 
   // Like first, but for the last elements. If n is undefined, return just the
   // last element.
   _.last = function(array, n) {
     return n === undefined ? array[array.length - 1] : n === 0 ? [] : n >= array.length ? array : array.slice(-n)
-
+// if "n" is undefined, return the last item, else if n = 0, return an empty array, else take the last n items (-n) 
   };
 
   // Call iterator(value, key, collection) for each element of collection.
@@ -58,6 +60,8 @@ var _ = {};
         iterator(collection[i], i, collection)
         }; 
       }
+  // if collection is an array, for loop - run iterator on collection[i] (array element), i (index), collection
+  // if collection is an object, for loop - run iterator on collection[i] (object value), i (key), collection
 };
 
   // Returns the index at which value can be found in the array, or -1 if value
@@ -75,6 +79,10 @@ var _ = {};
     });
 
     return result;
+    // _indexOf takes an array and target as arguments
+    // run _.each using anonymous function on each item in array
+    // anonymous function (iterator) takes item and index as arguments; if item === target and result === -1, change result to the index
+    // return index
   };
 
   // Return all elements of an array that pass a truth test.
@@ -87,7 +95,9 @@ var _ = {};
     };
   });
     return result
-    
+    // _.filter takes on collection and test args
+    // use _.each to run call anonymous function on each item in collection
+    // anon function: call test function on item in array; if result === true, push the item to the result array
     };
  
   // Return all elements of an array that don't pass a truth test.
@@ -97,6 +107,10 @@ var _ = {};
     return _.filter(collection, function(item){
       return !test(item)
     })
+    // _.reject takes on collection and test args
+    // call _.filter on collection using anonymous function
+    // anon function: call test function on item, and return the opposite; filter pushes the false values to result instead of the true values
+
   };
 
   // Produce a duplicate-free version of the array.
@@ -110,6 +124,10 @@ var _ = {};
     }
 
     return result
+    // _.uniq takes array as only arg
+    // sort array
+    // for-if loop: if item is not equal to next item, push first item to result array
+
   };
 
 
@@ -123,6 +141,10 @@ var _ = {};
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+
+    // _.map takes on collection and iterator args
+    // call _.each on collection using anonymous function
+    // anon function: call iterator on item, push result to result array (creates array of all the results)
   };
 
   /*
@@ -141,14 +163,23 @@ var _ = {};
     return _.map(collection, function(item){
       return item[key];
     });
+    // _.pluck takes on collection and key args
+    // call _.map on collection using anonymous function
+    // anon funtion: return the item[key] for the item (value of key for that item)
+    // _.map returns array of results
   };
 
   // Calls the method named by methodName on each value in the list.
   // Note: you will nead to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
 
-     
-
+    // _.map takes collection and anonymous function as args
+    // anonymous function returns function applied to each item of array
+    // if functionOrKey is a function: call function on each item of array using _.map
+    // if functinoOrKey is a method name: call method (item.functionOrKey) on each item of array using _.map
+      return _.map(collection, function(item){
+        return typeof functionOrKey === 'function' ? functionOrKey.apply(item) : item[functionOrKey].apply(item)
+      }) 
   };
 
   // Reduces an array or object to a single value by repetitively calling
@@ -165,6 +196,8 @@ var _ = {};
   //     return total + number;
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
+    // _.reduce takes on collection, iterator, accumulator args
+    // if accumulator is undefined, accumulator = first item in collection
     if (accumulator == undefined) {
       accumulator = collection[0]
     };
