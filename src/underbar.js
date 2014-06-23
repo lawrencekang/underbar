@@ -235,18 +235,25 @@ var _ = {};
       iterator = _.identity;
     }
     return _.reduce(collection, function(isTrue, item){
-      if (isTrue){
-        return true;
-      }
-      return Boolean(iterator(item));
-
-    }, false);
+      return Boolean(iterator(item)) && isTrue;
+    }, true);
+    //if the iterator is undefined, use _.identity as the default
+    //call reduce on the collection and an anonymous function
+    //anon function: return (Boolean of iterator(item) AND isTrue) - only results in true if both values are true
+    //default accumulator (aka isTrue) is true
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    if(iterator === undefined){
+      iterator = _.identity;
+    }
+    return _.every(collection, function(isTrue, item){
+
+    })
+
   };
 
 
