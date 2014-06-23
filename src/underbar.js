@@ -174,7 +174,7 @@ var _ = {};
   _.invoke = function(collection, functionOrKey, args) {
 
     // _.map takes collection and anonymous function as args
-    // anonymous function returns function applied to each item of array
+    // anonymous function uses .apply to run the functionOrKey to each item of array
     // if functionOrKey is a function: call function on each item of array using _.map
     // if functinoOrKey is a method name: call method (item.functionOrKey) on each item of array using _.map
       return _.map(collection, function(item){
@@ -219,12 +219,28 @@ var _ = {};
       }
       return item === target;
     }, false);
+    //_.contains takes on collection and target as args
+    //calls _.reduce(collection, anonymous function, false)
+    //anon function: takes on wasFound and item as args; returns item === target for each item
+    //item === target then becomes "wasFound" for the next item, but if item === target is true, then the anon function returns true and exits 
   };
 
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    // _.reduce takes on collection, anonymous function as args
+    // anon function: if iterator(item)
+    if(iterator === undefined){
+      iterator = _.identity;
+    }
+    return _.reduce(collection, function(isTrue, item){
+      if (isTrue){
+        return true;
+      }
+      return Boolean(iterator(item));
+
+    }, false);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
@@ -253,6 +269,10 @@ var _ = {};
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    _.each(obj, function(key, value){
+      obj[key] = value;
+    });
+    return obj
   };
 
   // Like extend, but doesn't ever overwrite a key that already
