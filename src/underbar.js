@@ -250,12 +250,15 @@ var _ = {};
     if(iterator === undefined){
       iterator = _.identity;
     }
-    return _.every(collection, function(isTrue, item){
-
-    })
+    return _.reduce(collection, function(isTrue, item){
+      return Boolean(iterator(item)) || isTrue;
+    }, false);
 
   };
-
+//if any of elements is true, return true
+//if any element is false, return false
+//_.every returns true if every item is true
+//_.every returns false if any item is false
 
   /**
    * OBJECTS
@@ -276,10 +279,13 @@ var _ = {};
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
-    _.each(obj, function(key, value){
-      obj[key] = value;
-    });
-    return obj
+    for (var i=1; i<arguments.length; i++){
+      for (var key in arguments[i]) {
+        obj[key] = arguments[i][key]
+      }
+      
+    };
+   return obj
   };
 
   // Like extend, but doesn't ever overwrite a key that already
